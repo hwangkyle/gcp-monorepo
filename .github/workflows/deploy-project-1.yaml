@@ -1,0 +1,16 @@
+name: Deploy Project 1
+
+on:
+  push:
+    branches: ['main']
+    paths: ['project-1/**']
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Run Cloud Build Trigger
+      run: |
+        curl -X POST -H "Content-Type: application/json" -H "Content-Length: 0" "https://cloudbuild.googleapis.com/v1/projects/my-project-394623/locations/us-central1/triggers/proj1-trigger:webhook?key=${{secrets.KEY}}&secret=${{secrets.SECRET}}&trigger=proj1-trigger&projectId=my-project-394623"
+
