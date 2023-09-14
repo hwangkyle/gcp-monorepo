@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    environment: test-env
     runs-on: ubuntu-latest
 
     steps:
