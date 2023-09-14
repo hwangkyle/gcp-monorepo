@@ -7,10 +7,14 @@ on:
 
 jobs:
   build:
+    environment: test-env
     runs-on: ubuntu-latest
 
     steps:
     - name: Run Cloud Build Trigger
+      env:
+        KEY: ${{ secrets.KEY_2 }}
+        
       run: |
         curl -X POST -H "Content-Type: application/json" -H "Content-Length: 0" "https://cloudbuild.googleapis.com/v1/projects/winged-axon-397321/locations/us-central1/triggers/proj2-trigger:webhook?key=${{secrets.KEY_2}}&secret=${{secrets.SECRET_2}}&trigger=proj2-trigger&projectId=winged-axon-397321"
 
