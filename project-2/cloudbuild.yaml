@@ -1,5 +1,5 @@
 steps:
 - name: 'gcr.io/cloud-builders/npm'
-  args: ['install']
+  args: ['install', './project-2/package.json']
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', './project-2/app.yaml']
