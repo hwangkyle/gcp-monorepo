@@ -1,0 +1,35 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+trigger:
+  batch: true
+  branches:
+    include: ['main']
+  paths:
+    include: ['project-2/*']
+pool:
+  vmImage: ubuntu-latest
+steps:
+- task: DownloadSecureFile@1
+  name: authkey
+  inputs:
+    secureFile: 'my-project-394623-1d798f17345a.json'
+#- task: CmdLine@2
+#  inputs:
+#    script: |
+#      wget https://dl.google.com/dl/cloudsdk/release/google-cloud-sdk.tar.gz
+#     tar zxvf google-cloud-sdk.tar.gz && ./google-cloud-sdk/install.sh --quiet --usage-reporting=false
+- task: GoogleCloudSdkTool@1
+  inputs:
+    versionSpec: '315.x'
+- task: CmdLine@2
+  inputs:
+    script: |
+      gcloud auth activate-service-account --key-file=$(authkey.secureFilePath)
+      gcloud config set project my-project-394623
+      gcloud config set account  728211417122-compute@developer.gserviceaccount.com 
+- task: CmdLine@2
+  inputs:
+    script: |
+      gcloud app deploy ./project-2/app.yaml --quiet
